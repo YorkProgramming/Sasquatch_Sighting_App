@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+        <body class= "bg-dark-subtle">
+
+            <nav class="navbar navbar-expand-lg bg-success">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#"
+                    >TheSquatch</a>
+                    <div>
+                        <p><strong> {{ user.first_name }} </strong></p>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        
+                        <form class="d-flex" role="search">
+                        <a class="btn btn-outline-light" href="/create/sighting">New Sighting!</a>
+                        <a class="btn btn-outline-light" href="/logout">Logout</a>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>Reported Sightings</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for sighting in sightings %}
+                            <tr>
+                                <td><p>
+                                    <div>
+                                    {{ sighting.location }} - {{ sighting.created_at }} 
+                                    </div>
+                                    <div>
+                                        Reprted By: {{ sighting.creator.first_name }}
+                                    </div>
+                                </p></td>
+                                <td>
+                                    <div>
+                                        <div>
+                                            {% if sighting.creator.id == session['user_id'] %}
+                                                <a href="/update/sighting/{{sighting.id}}">
+                                                Update</a>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {% if sighting.creator.id == session['user_id'] %}
+                                                <a href="/delete/sighting/{{sighting.id}}">
+                                                Delete</a>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                                <a href="/show/sighting/{{sighting.id}}">
+                                                View Sighting</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</html>
